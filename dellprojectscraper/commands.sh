@@ -1,0 +1,2 @@
+# cd /Users/David/Documents/github/dellprojectscraper ; /usr/bin/env /Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home/bin/java -XX:+ShowCodeDetailsInExceptionMessages -Dfile.encoding=UTF-8 -cp /Users/David/Documents/github/dellprojectscraper/target/classes com.dellproject.scraper.App
+/usr/bin/env /Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home/bin/java -XX:+ShowCodeDetailsInExceptionMessages -Dfile.encoding=UTF-8 @/var/folders/ph/1bzkgfm10y5d5f9cxpljp1w00000gn/T/cp_czo4ix2xtat5wiqgwic9g4ge4.argfile com.dellproject.scraper.App
