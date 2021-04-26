@@ -27,6 +27,18 @@
           <artifactId>jsoup</artifactId>
           <version>1.11.3</version>
       </dependency>
+  
+    <dependency>
+      <groupId>net.bytepowered</groupId>
+      <artifactId>jcommon</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+  
+    <dependency>
+      <groupId>org.noear</groupId>
+      <artifactId>luffy.cap.extend.jsoup</artifactId>
+      <version>1.0.5</version>
+    </dependency>
   </dependencies>
 
   <build>
