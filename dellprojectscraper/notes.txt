@@ -1,0 +1,45 @@
+4-26-2021
+putting together some code 
+David's progress:
+    I can get a regular html file to be scrapable
+    I can't get a ashx file to be scrapable despite 2 compilable attempts and a 3rd uncompilable to connect 
+
+    for a scrapable site:
+        https://www.cruisemapper.com/wiki/759-how-much-does-a-cruise-ship-cost
+            We want to get certain tags:
+                table table-striped, 
+                table row style height: 37px;
+
+
+questions for analytics teams:
+    what data from each site are we looking for
+    https://www.cruisemapper.com/wiki/759-how-much-does-a-cruise-ship-cost
+    how do you want it presented?
+
+questions for dashboard team:
+
+    how do you want it presented?
+
+
+workflow
+get trees from the finite (hopefully) links
+look on certain branches for each tree for data we want
+collect the data in a representation
+send the representation to the other teams
+
+pair programing commit message
+"Fred Wang, Morgan Precanico, David Tauraso
+main commit message"
+
+We are using github desktop instead
+
+
+
+4-27-2021
+jscode with Java is giving serious project issues
+    it doesn't recognize there is a project to edit and rerun
+    mine can only rerun the last time it was saved
+    We are using Morgan's computer as it can run the java correctly
+    Also using liveshare made it helpful to allow the other users to contribute regardless of the issues with Maven environment
+    
+    
