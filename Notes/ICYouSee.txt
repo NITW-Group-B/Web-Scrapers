@@ -1,0 +1,44 @@
+  static void scrapeICYouSeeTitanicPage() {
+    Document titanicDoc;
+    try {
+      titanicDoc = Jsoup.connect("http://www.icyousee.org/titanic.html").get();
+    
+      Element table1 = titanicDoc.select("table[width=75%]").get(0);
+      
+      Elements row = table1.select("tr");
+      // System.out.println(row);
+      Elements cellRow = row.get(1).select("td");
+      Elements cellBlock = cellRow.get(0).select("p");
+      Elements tagCell = cellBlock.get(1).select("p");
+      //Elements cellBreak = tagCell.get(0).select("br");
+      System.out.println(tagCell.text());
+      String[] test = tagCell.text().split(" ");
+      System.out.println(test);
+      // data cleaning part
+      /*
+      split by " "
+      collect order :
+      categoryName number
+      */
+      // for(int i = 0; i < tables.size(); i++) {
+
+      //   System.out.println(tables.get(i));
+      //   System.out.println("End Table!");
+      //   System.out.println();
+      // }
+      
+
+
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    // category | total | died | died servants | survived | survived servants | % survived | % of servants survived
+
+      // access all the data in the table
+        // find the deepest level we can access
+      
+      // mapping each number to it's category reguardless of how messy the html is (data cleaning)
+      
+      // can we get access to the smallest text pieces or are we limited to p tags?
+  }

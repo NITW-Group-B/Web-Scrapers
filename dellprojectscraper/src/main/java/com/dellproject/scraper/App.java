@@ -12,15 +12,28 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.sputnikdev.bluetooth.URL;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 // import net.bytepowered.common.lang.HashMap;
 // import okhttp3.benchmarks.UrlConnection;
 
 // https://www.codegrepper.com/code-examples/python/how+to+scrape+.ashx
 public class App {
 
+  /*
+  window sliding number collector
+    open window when we see a digit
+    close window when we see a space or end of string and if we have data in our collector
+    save number after closing window
+  if there are no numbers then we want an empty array returned
+  */
+  // take picture of this function
+
   public static void main(String[] args) {
     System.out.println( "Data from Cruisemapper.com:" );
     try {
+      PrintWriter  output = new PrintWriter( "CruiseMapperOutput.csv" );
       HashMap<String,String> variable = new HashMap<String, String>();
       variable.put("type", "application/x-google-chrome-pdf");
         // Here we create a document object and use JSoup to fetch the website
@@ -45,8 +58,17 @@ public class App {
       Element table = doc.select("table").get(0); //select the first table
       Elements head = table.select("th"); // get the table heading
       Elements rows = table.select("tr"); // get the rest of the content in a table
+      String headerPart = "";
+      for (int l = 0; l < head.size(); l++){
+        headerPart += head.get(l).text();
+        if(l < head.size() - 1){
+          headerPart += ", ";
+        }
+         
+      // output.println(head.text());
+       }
+       output.println(headerPart);
 
-      System.out.println(head.text());
 
       for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
 
@@ -62,13 +84,48 @@ public class App {
      
 
       for (int j = 0; j < downServers.size(); j++) {
+        String line = "";
         for(int k = 0; k < downServers.get(j).size(); k++) {
           //Instead of println, figure out how to add a comma and space after each item so it's in a row instead of a column
-          System.out.println(downServers.get(j).get(k));
-        }
 
-        System.out.println();
+          // remove commas from each entry
+          downServers.get(j).get(k).replace(",", " ");
+          line += downServers.get(j).get(k).replace(",", "");
+          if(k < downServers.get(j).size() - 1) {
+            line += ", ";
+          }
+          //  + ", ";
+        }
+        output.print(line);
+        output.println();
       }
+      
+      // try  {
+      //   PrintWriter writer = new PrintWriter(new File("test.txt"));
+      //   StringBuilder sb = new StringBuilder();
+      //   sb.append("id,");
+      //   sb.append(',');
+      //   sb.append("Name");
+      //   sb.append('\n');
+  
+      //   sb.append("1");
+      //   sb.append(',');
+      //   sb.append("Prashant Ghimire");
+      //   sb.append('\n');
+  
+      //   String x = "I am a test";
+      //   writer.write(x);
+      //   System.out.print(sb);
+      //   System.out.println("done!");
+  
+      // } catch (FileNotFoundException e) {
+      //   System.out.println(e.getMessage());
+      // }
+      
+      
+
+
+      output.close();
       /*
       David's work
       excell output
@@ -97,7 +154,7 @@ public class App {
       
       use the header of each cell to denote the category
       an example table
-      category | total | died | survived | % survived | % of servants survived
+      category | total | died | died servants | survived | survived servants | % survived | % of servants survived
 
       the main left to right cells are source cells
 
@@ -108,6 +165,7 @@ public class App {
 
 
       */
+
       /*
       header: 
         th style= height: 62px;
