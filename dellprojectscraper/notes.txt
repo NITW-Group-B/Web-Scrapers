@@ -41,5 +41,180 @@ jscode with Java is giving serious project issues
     mine can only rerun the last time it was saved
     We are using Morgan's computer as it can run the java correctly
     Also using liveshare made it helpful to allow the other users to contribute regardless of the issues with Maven environment
-    
-    
+
+4-28-2021
+/*
+  window sliding number collector
+    open window when we see a digit
+    close window when we see a space or end of string and if we have data in our collector
+    save number after closing window
+  if there are no numbers then we want an empty array returned
+  */
+  // take picture of this function
+
+  // Elements repositories = doc.getElementsByClass("table table-striped");
+      // Elements stuff = doc.select("th[style]");
+      // Elements stuffBody = doc.select("tr[style]");
+      //  //("height: 62px;");
+      // // System.out.println(repositories);
+      // System.out.println(stuff.text());
+      // System.out.println(stuffBody[0].text());
+      // System.out.println("change");
+
+// Document doc2 = Jsoup.connect("https://query1.finance.yahoo.com/v7/finance/download/RCL?period1=1420070400&period2=1619568000&interval=1wk&events=history&includeAdjustedClose=true").get();
+// String[] yahooCruise = doc2.text().split(",");
+// Element table2 = doc2.select("table").get(0);
+/*
+indexes of b
+0, 1, 2,  3,  4,  5, 6 (1st round of loop)
+7, 8, 9, 10, 11, 12, 13 (2nd round of loop)
+
+
+*/
+// for (int b = 0; b < yahooCruise.length; b += 7) {
+
+// collect 7 items from b to b + 7 (1 row)
+/*
+collect b, b + 1, + 2, + 3, .. b + 6
+*/
+// getting row
+// for(int offset = 0; offset < 7; offset++) {
+    // b + offset
+// }
+
+
+// add newline
+//  System.out.println(yahooCruise[b]);
+
+// }
+/*
+      David's work
+      excell output
+      pseudocode reguarding one of the tables in the below titanic page
+      // output data to excel file
+      // https://www.tutorialspoint.com/javaexamples/write_data_into_excel_sheet.htm
+      // https://www.geeksforgeeks.org/how-to-write-data-into-excel-sheet-using-java/
+
+
+      // http://www.icyousee.org/titanic.html
+      // we're looking for primarily the different sections breaking down the various passengers and survivors on this page, only text is needed
+      /*
+      challenge:
+        we have multiple
+      get all the tables
+      choose certain tables based on the webpage
+      
+      scrape each table slightly differently as we want source data only
+        the analysis teams can make the drived tables with excell formulas and whatever they have to use
+      
+      visit each cell
+        most cells appear to have data for a regular row
+          
+        some cells are actually just cells
+  
+      
+      use the header of each cell to denote the category
+      an example table
+      category | total | died | died servants | survived | survived servants | % survived | % of servants survived
+
+      the main left to right cells are source cells
+
+      the border cells are a 2 way sum of the source cells
+
+      not each table has the same composition of cells so a slightly different approach for each table
+      we wil need to access different kinds of html tags and tell them appart per table cell and table
+
+
+      */
+
+      /*
+      header: 
+        th style= height: 62px;
+
+      body rows
+        td style= height: 36px;
+        6 items per row
+      our table data structure:
+
+      {
+        'header': [stuff],
+        'rows' : [stuff]
+      }
+
+      information importance:
+      ship name
+      cost to build
+      year built
+
+      */
+
+
+      // don't know how to scrape this page
+
+      // attempt 1
+      // Document doc2 = Jsoup.connect("https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx").ignoreContentType(true).get();
+      // System.out.println(doc2);
+
+
+      // attempt 2
+      // // Initialize UnSupportedMimeTypeExeception class 
+      // UnsupportedMimeTypeException mimeType = new UnsupportedMimeTypeException("Hey this is Mime",
+      //     "application/x-google-chrome-pdf",
+      //     "https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx");
+      // String mime = mimeType.getMimeType();
+
+      // Document test = Jsoup.connect("https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx")
+      // // .requestBody("JSON")
+      // .header("Content-Type", mime)
+      // // .cookies(response.cookies())
+      // .ignoreContentType(true)
+      // .get();
+      // System.out.println(test);
+
+
+      // attempt 3 (doesn't compile)
+      // URL url = 
+      // new URL( "https://github.com/NITW-Group-B/Web-Scrapers/blob/david-branch/2021%20State%20of%20the%20Cruise%20Industry_optimized.pdf" );
+
+      // UrlConnection connection = url.openConnection();
+
+      // input = connection.getInputStream();
+
+      // Document doc3 = Jsoup.parse(input, "UTF-8");
+      // System.out.println(doc3.toString());
+
+      // With the document fetched, we use JSoup's title() method to fetch the title
+      // System.out.printf("Title: %s\n", doc.title());
+
+      // Get the list of repositories
+      // Elements repositories = doc.getElementsByClass("repo-item");
+
+      /**
+       * For each repository, extract the following information:
+       * 1. Title
+       * 2. Number of issues
+       * 3. Description
+       * 4. Full name on github
+       */
+      // for (Element repository : repositories) {
+      //   // Extract the title
+      //   String repositoryTitle = repository.getElementsByClass("repo-item-title").text();
+
+      //   // Extract the number of issues on the repository
+      //   String repositoryIssues = repository.getElementsByClass("repo-item-issues").text();
+
+      //   // Extract the description of the repository
+      //   String repositoryDescription = repository.getElementsByClass("repo-item-description").text();
+
+      //   // Get the full name of the repository
+      //   String repositoryGithubName = repository.getElementsByClass("repo-item-full-name").text();
+
+      //   // The reposiory full name contains brackets that we remove first before generating the valid Github link.
+      //   String repositoryGithubLink = "https://github.com/" + repositoryGithubName.replaceAll("[()]", "");
+
+      //   // Format and print the information to the console
+      //   System.out.println(repositoryTitle + " - " + repositoryIssues);
+      //   System.out.println("\t" + repositoryDescription);
+      //   System.out.println("\t" + repositoryGithubLink);
+      //   System.out.println("\n");
+      // }

@@ -2,55 +2,64 @@
 package com.dellproject.scraper;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.net.URL;
 
+import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.sputnikdev.bluetooth.URL;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.*;
 // import net.bytepowered.common.lang.HashMap;
 // import okhttp3.benchmarks.UrlConnection;
 
 // https://www.codegrepper.com/code-examples/python/how+to+scrape+.ashx
 public class App {
 
-  /*
-  window sliding number collector
-    open window when we see a digit
-    close window when we see a space or end of string and if we have data in our collector
-    save number after closing window
-  if there are no numbers then we want an empty array returned
-  */
-  // take picture of this function
+
+  public static String downloadLink;
+  public static String outputName;
+
+  public static int stopFlag = 0;
+  
+
 
   public static void main(String[] args) {
-    System.out.println( "Data from Cruisemapper.com:" );
+
+    //System.out.println( "Obtaining Data:" );
     try {
+
       PrintWriter  output = new PrintWriter( "CruiseMapperOutput.csv" );
+      //PrintWriter  output2 = new PrintWriter( "RoyalCaribbeanOutput.csv");
       HashMap<String,String> variable = new HashMap<String, String>();
       variable.put("type", "application/x-google-chrome-pdf");
         // Here we create a document object and use JSoup to fetch the website
 
         //Here begins the code to scrape the table from cruisemapper.com
       Document doc = Jsoup.connect("https://www.cruisemapper.com/wiki/759-how-much-does-a-cruise-ship-cost").get();
-      // Elements repositories = doc.getElementsByClass("table table-striped");
-      // Elements stuff = doc.select("th[style]");
-      // Elements stuffBody = doc.select("tr[style]");
-      //  //("height: 62px;");
-      // // System.out.println(repositories);
-      // System.out.println(stuff.text());
-      // System.out.println(stuffBody[0].text());
-      // System.out.println("change");
+      
 
-
-      // fred's work
+      // fred started this
       // 2d array for 1 table
       ArrayList<ArrayList<String>> downServers = new ArrayList<ArrayList<String>>();
       
@@ -100,6 +109,16 @@ public class App {
         output.println();
       }
       
+      // Time Period:Dec 31, 2014 - Apr 27, 2021 | Show:Historical Prices | Frequency:Weekly
+      // https://finance.yahoo.com/quote/RCL/history?period1=1420070400&period2=1619568000&interval=1wk&filter=history&frequency=1wk&includeAdjustedClose=true"
+      
+      
+      
+      
+      
+    // handles IO exceptions
+      
+      // output2.print(yahooCruise);
       // try  {
       //   PrintWriter writer = new PrintWriter(new File("test.txt"));
       //   StringBuilder sb = new StringBuilder();
@@ -126,141 +145,203 @@ public class App {
 
 
       output.close();
-      /*
-      David's work
-      excell output
-      pseudocode reguarding one of the tables in the below titanic page
-      // output data to excel file
-      // https://www.tutorialspoint.com/javaexamples/write_data_into_excel_sheet.htm
-      // https://www.geeksforgeeks.org/how-to-write-data-into-excel-sheet-using-java/
-
-
-      // http://www.icyousee.org/titanic.html
-      // we're looking for primarily the different sections breaking down the various passengers and survivors on this page, only text is needed
-      /*
-      challenge:
-        we have multiple
-      get all the tables
-      choose certain tables based on the webpage
+      //output2.close();
       
-      scrape each table slightly differently as we want source data only
-        the analysis teams can make the drived tables with excell formulas and whatever they have to use
+
+      Files.move(Paths.get("C:/Users/Heather/Documents/GitHub/Web-Scrapers/dellprojectscraper/CruiseMapperOutput.csv"), Paths.get("C:/Users/Heather/Documents/GitHub/Web-Scrapers/dellprojectscraper/Output/CruiseMapperOutput.csv"), StandardCopyOption.REPLACE_EXISTING);
       
-      visit each cell
-        most cells appear to have data for a regular row
-          
-        some cells are actually just cells
-  
       
-      use the header of each cell to denote the category
-      an example table
-      category | total | died | died servants | survived | survived servants | % survived | % of servants survived
-
-      the main left to right cells are source cells
-
-      the border cells are a 2 way sum of the source cells
-
-      not each table has the same composition of cells so a slightly different approach for each table
-      we wil need to access different kinds of html tags and tell them appart per table cell and table
-
-
-      */
-
-      /*
-      header: 
-        th style= height: 62px;
-
-      body rows
-        td style= height: 36px;
-        6 items per row
-      our table data structure:
-
-      {
-        'header': [stuff],
-        'rows' : [stuff]
-      }
-
-      information importance:
-      ship name
-      cost to build
-      year built
-
-      */
-
-
-      // don't know how to scrape this page
-
-      // attempt 1
-      // Document doc2 = Jsoup.connect("https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx").ignoreContentType(true).get();
-      // System.out.println(doc2);
-
-
-      // attempt 2
-      // // Initialize UnSupportedMimeTypeExeception class 
-      // UnsupportedMimeTypeException mimeType = new UnsupportedMimeTypeException("Hey this is Mime",
-      //     "application/x-google-chrome-pdf",
-      //     "https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx");
-      // String mime = mimeType.getMimeType();
-
-      // Document test = Jsoup.connect("https://cruising.org/-/media/research-updates/research/2021-state-of-the-cruise-industry_optimized.ashx")
-      // // .requestBody("JSON")
-      // .header("Content-Type", mime)
-      // // .cookies(response.cookies())
-      // .ignoreContentType(true)
-      // .get();
-      // System.out.println(test);
-
-
-      // attempt 3 (doesn't compile)
-      // URL url = 
-      // new URL( "https://github.com/NITW-Group-B/Web-Scrapers/blob/david-branch/2021%20State%20of%20the%20Cruise%20Industry_optimized.pdf" );
-
-      // UrlConnection connection = url.openConnection();
-
-      // input = connection.getInputStream();
-
-      // Document doc3 = Jsoup.parse(input, "UTF-8");
-      // System.out.println(doc3.toString());
-
-      // With the document fetched, we use JSoup's title() method to fetch the title
-      // System.out.printf("Title: %s\n", doc.title());
-
-      // Get the list of repositories
-      // Elements repositories = doc.getElementsByClass("repo-item");
-
-      /**
-       * For each repository, extract the following information:
-       * 1. Title
-       * 2. Number of issues
-       * 3. Description
-       * 4. Full name on github
-       */
-      // for (Element repository : repositories) {
-      //   // Extract the title
-      //   String repositoryTitle = repository.getElementsByClass("repo-item-title").text();
-
-      //   // Extract the number of issues on the repository
-      //   String repositoryIssues = repository.getElementsByClass("repo-item-issues").text();
-
-      //   // Extract the description of the repository
-      //   String repositoryDescription = repository.getElementsByClass("repo-item-description").text();
-
-      //   // Get the full name of the repository
-      //   String repositoryGithubName = repository.getElementsByClass("repo-item-full-name").text();
-
-      //   // The reposiory full name contains brackets that we remove first before generating the valid Github link.
-      //   String repositoryGithubLink = "https://github.com/" + repositoryGithubName.replaceAll("[()]", "");
-
-      //   // Format and print the information to the console
-      //   System.out.println(repositoryTitle + " - " + repositoryIssues);
-      //   System.out.println("\t" + repositoryDescription);
-      //   System.out.println("\t" + repositoryGithubLink);
-      //   System.out.println("\n");
-      // }
- 
+      
+      
+       
       // In case of any IO errors, we want the messages written to the console
       } catch (IOException e) {
         e.printStackTrace();
       }
+
+      runLoop();
+      
+  
+  }
+  
+  public static /*long*/void computeDateSeconds(Integer yearNumber, Integer monthNumber, Integer dayNumber) {
+    
+    // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-m-d");
+    // LocalDateTime dateTime = DateTime.parse(yearNumber.toString() + "-" + monthNumber.toString() + "-" + dayNumber.toString());
+    // return Duration.between(dateTime, LocalDateTime.now()).getSeconds();
+    // Date date;
+    try {
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+      String dateInString = dayNumber.toString() + "-" + monthNumber.toString() + "-" + yearNumber.toString();//  "15-10-2015";
+  
+      Date date = sdf.parse(dateInString);
+      System.out.println(date); //Prints Tue Oct 15 10:20:56 SGT 2015
+
+      // convert date to seconds
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+  }
+  
+  public static void fileDownload() {
+    String lineName;
+    long p1 = 0;
+    long p2 = 0;
+    String time;
+
+    Scanner cruiseLine = new Scanner(System.in);
+    Scanner p1test = new Scanner(System.in);
+    Scanner p2test = new Scanner(System.in);
+    
+    Scanner monthNumberInput = new Scanner(System.in);
+    Integer monthNumber = 0;
+
+    Scanner dayNumberInput = new Scanner(System.in);
+    Integer dayNumber = 0;
+
+    Scanner yearNumberInput = new Scanner(System.in);
+    Integer yearNumber = 0;
+    
+    Scanner frequencyInput = new Scanner(System.in);
+
+    Scanner userInput2 = new Scanner(System.in);
+
+    System.out.print("Enter the acronym for the line:\n");
+    lineName = cruiseLine.next();
+    System.out.println();
+/*
+    System.out.print("Enter p1:\n");
+    p1 = p1test.nextLong();
+
+    System.out.print("Enter p2:\n");
+    p2 = p2test.nextLong();
+*/
+    
+    for(int i = 0; i <= 1; i++) {
+      if(i == 0) {
+        System.out.print("Enter the start date\n");
+        
+      }
+      if(i == 1) {
+        System.out.print("Enter the end date:\n");
+      }
+      System.out.print("Month number:\n");
+      monthNumber = monthNumberInput.nextInt();
+      System.out.println();
+      
+      System.out.print("Day number:\n");
+      dayNumber = dayNumberInput.nextInt();
+      System.out.println();
+  
+      System.out.print("Year number:\n");
+      yearNumber = yearNumberInput.nextInt();
+      System.out.println();
+      
+      if(i == 0) {
+        computeDateSeconds(yearNumber, monthNumber, dayNumber);
+        // System.out.print(p1);
+        
+      }
+      if(i == 1) {
+        computeDateSeconds(yearNumber, monthNumber, dayNumber);
+        // System.out.print(p2);
+      }
+      
+
+      
+    }
+    
+    System.out.print("Input frequency type: (wk/d/mo)\n");
+    time = frequencyInput.next();
+    if(time.equals("Month") || time.equals("Mo") || time.equals("month")) {
+        time = "mo";
+    }
+    if(time.equals("Day") || time.equals("D") || time.equals("day")) {
+      time = "d";
+    }
+    if(time.equals("Week") || time.equals("Wk") || time.equals("week")) {
+      time = "wk";
+    }
+    // https://query1.finance.yahoo.com/v7/finance/download/RCL?period1=-86400&period2=1619308800&interval=1mo&events=history&includeAdjustedClose=true
+    String url ="https://query1.finance.yahoo.com/v7/finance/download/" + lineName + "?period1=" + p1 + "&period2=" + p2 + "&interval=1" + time + "&events=history&includeAdjustedClose=true";
+    System.out.println(url);
+    try {
+      BufferedInputStream inputStream = new BufferedInputStream(new URL(url).openStream() ); 
+      System.out.print("Input File Name:\n");
+      outputName = userInput2.next();
+      System.out.println();
+      FileOutputStream fileOS = new FileOutputStream("C:/Users/Heather/Documents/GitHub/Web-Scrapers/dellprojectscraper/Output/" + outputName);
+      byte data[] = new byte[1024];
+      int byteContent;
+      while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+        fileOS.write(data, 0, byteContent);
+      }
+      fileOS.close();
+      cruiseLine.close();
+      monthNumberInput.close();
+      dayNumberInput.close();
+      yearNumberInput.close();
+      frequencyInput.close();
+      userInput2.close();
+      System.out.print("File Downloaded\n\n");
+      // runLoop();
+    } catch (IOException e) {
+    }
+  }
+
+
+   public static void runLoop() {
+
+    Scanner runFlag = new Scanner(System.in);
+    String runCheck;
+    // prompt to run
+    System.out.print("Run (Y/N)\n");
+    runCheck = runFlag.next();
+    while (runCheck.equals("y") || runCheck.equals("Y")) {
+        // get data from user
+        // do stuff
+        fileDownload();
+        // rerun prompt
+        System.out.print("Run again? (Y/N)\n");
+        runCheck = runFlag.next();
+    }
+    System.out.print("Quitting...");
+    
+
+    // just ask for query parameters so we can make the download link
+
+    
+    // 45 years ago? 1420070400/(60 * 60 * 24 * 365) = 45.0301369863
+    // Minutes * Hours * day * Year
+    // some starting time to 1420070400
+    // first day is dec 31 1969
+    // 1420156800    Scanner userInput = new Scanner(System.in);
+    
+    //get date as day month year
+    //convert the 3 numbers to seconds with java(java's system might not compute dates exactly like yahoo, but it's worth trying)
+    
+    
+    // System.out.print("Run again? (Y/N)\n");
+    // runCheck = runFlag.next();
+    // prints false
+    // System.out.println(runCheck.equals("y"));
+    // if(runCheck == "y") {
+    //   System.out.print("yes");
+    // }
+    
+    // if(runCheck.equals("y") || runCheck.equals("Y") || runCheck.equals("yes") || runCheck.equals("Yes")) {
+    //     System.out.println();
+    //     System.out.println();
+    //     // run the user entry code again in a new function stack frame
+    //     // Recursion is a term used to call a function within a function
+    //     fileDownload();
+    // }else {
+    //     System.out.print("Quitting...");
+    // }
+    
+    runFlag.close();
   }
 }
+
